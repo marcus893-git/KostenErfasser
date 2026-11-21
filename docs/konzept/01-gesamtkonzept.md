@@ -142,10 +142,10 @@ Ablauf eines Beleg-Scans:
 |------------|------------------------------------------------------------------------------------------------|
 | 21.11.2026 | Native iPhone-App mit SwiftUI, keine Web-App.                                                  |
 | 21.11.2026 | Installation mit kostenloser Apple-ID („Personal Team“), Neuinstallation alle 7 Tage, kein kostenpflichtiges Developer-Konto. Folge: kein iCloud-Sync, höchstens 3 eigene Apps auf dem iPhone. |
+| 21.11.2026 | Zielgerät ist ein iPhone 16 mit iOS 26. Die App setzt iOS 26 als Mindestversion voraus. |
+| 21.11.2026 | Die Standardkategorien aus der Tabelle oben werden so übernommen. |
 
 ## Offene Entscheidungen
 
 1.  Steht ein Mac zur Verfügung? Davon hängt der Installationsweg ab (Weg A mit Mac oder Weg C ohne Mac, siehe Teil 3).
-2.  Welches iPhone-Modell mit welcher iOS-Version wird genutzt? Geplant ist iOS 18 als Mindestversion.
-3.  Passt die Kategorienliste, oder sollen Kategorien ergänzt oder gestrichen werden?
-4.  Sollen Belegbilder dauerhaft gespeichert werden? Ein Kassenzettel belegt komprimiert etwa 150 bis 300 KB.
+2.  Sollen Belegbilder dauerhaft gespeichert werden? Ein Kassenzettel belegt komprimiert etwa 150 bis 300 KB.

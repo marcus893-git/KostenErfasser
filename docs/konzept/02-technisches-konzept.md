@@ -98,7 +98,7 @@ Kategorien werden archiviert statt gelöscht, damit alte Auswertungen stimmen. �
 
 Qualitätsziel für den Parser: Auf einer Sammlung von mindestens 50 anonymisierten Belegen soll die Summe in 95 % und die Firma in 85 % der Fälle richtig erkannt werden. Die Belege liegen als OCR-Text im Repository und werden bei jedem Push geprüft.
 
-### Erweiterungen ab iOS 26
+### Funktionen von iOS 26
 
 - Vision RecognizeDocumentsRequest erkennt zusätzlich die Struktur eines Dokuments, etwa Tabellenzeilen. Das hilft, Beträge den richtigen Positionen zuzuordnen.
 - Auf iPhones mit Apple Intelligence (ab iPhone 15 Pro) kann das Foundation-Models-Framework die Felder aus dem erkannten Text strukturiert auslesen. Das Sprachmodell läuft lokal und kostenlos. Die Regel-Erkennung bleibt die Grundlage, das Ergebnis des Modells wird nur übernommen, wenn es plausibel ist: Der Betrag muss im Text vorkommen und das Datum gültig sein.
@@ -132,7 +132,7 @@ Zeiträume werden mit dem Kalender für das Gebietsschema de_DE gebildet, die Wo
 | Thema                  | Festlegung                                         |
 |------------------------|----------------------------------------------------|
 | Sprache                | Swift 6 mit strikter Concurrency-Prüfung           |
-| Mindestversion         | iOS 18 (iPhone XS, XR, SE 2. Generation und neuer) |
+| Mindestversion         | iOS 26 (Zielgerät: iPhone 16) |
 | Oberfläche             | SwiftUI, Swift Charts                              |
 | Speicherung            | SwiftData, Belegbilder als externe Daten           |
 | Texterkennung          | Vision auf dem Gerät, VisionKit-Dokumentenscanner  |

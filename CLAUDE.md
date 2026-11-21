@@ -1,6 +1,6 @@
 # KostenErfasser
 
-Native iPhone-App (SwiftUI) zur privaten Ausgabenerfassung mit Belegscan per Kamera und Auswertungen. Alle Daten lokal auf dem Gerät, keine Server, keine Web-APIs. Installation ohne App Store über Xcode mit kostenloser Apple-ID (7-Tage-Signatur, kein iCloud/CloudKit möglich).
+Native iPhone-App (SwiftUI) zur privaten Ausgabenerfassung mit Belegscan per Kamera und Auswertungen. Alle Daten lokal auf dem Gerät, keine Server, keine Web-APIs. Installation ohne App Store über Xcode mit kostenloser Apple-ID (7-Tage-Signatur, kein iCloud/CloudKit möglich). Zielgerät: iPhone 16 mit iOS 26, Mindestversion iOS 26 (neue APIs wie Vision RecognizeDocumentsRequest und Foundation Models ohne Verfügbarkeitsprüfung für ältere Systeme nutzbar; Foundation Models trotzdem auf Verfügbarkeit des Modells prüfen).
 
 Konzept und getroffene Entscheidungen: `docs/konzept/` (Teil 1 Produkt, Teil 2 Technik, Teil 3 Umgebung und Installation). Ausbaustufen 0 bis 4 stehen in Teil 1.
 
