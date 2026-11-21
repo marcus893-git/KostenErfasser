@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  core-linux:
+    name: Kernlogik (Linux)
+    runs-on: ubuntu-latest
+    container: swift:6.4.3-noble
+    steps:
+      - uses: actions/checkout@v5
+      - name: Formatierung prüfen
+        run: swift format lint --strict --recursive Package.swift Sources Tests
+      - name: Tests
+        run: swift test --parallel
