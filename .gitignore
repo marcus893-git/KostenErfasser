@@ -9,3 +9,10 @@ xcuserdata/
 
 # macOS
 .DS_Store
+
+# Von XcodeGen und der CI erzeugt
+App/KostenErfasser.xcodeproj/
+App/Generated/
+build/
+Payload/
+*.ipa

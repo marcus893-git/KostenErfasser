@@ -1,0 +1,50 @@
+name: iOS-App
+
+on:
+  push:
+    paths:
+      - "App/**"
+      - "Sources/**"
+      - "Package.swift"
+      - ".github/workflows/ios-app.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: App bauen (unsigniert, für SideStore)
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - name: Xcode-Version
+        run: xcodebuild -version
+      - name: XcodeGen installieren
+        run: brew install xcodegen
+      - name: Xcode-Projekt erzeugen
+        run: xcodegen generate --spec App/project.yml
+      - name: App bauen
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project App/KostenErfasser.xcodeproj \
+            -scheme KostenErfasser \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            -quiet \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            CURRENT_PROJECT_VERSION=${{ github.run_number }}
+      - name: IPA packen
+        run: |
+          mkdir -p Payload
+          cp -R build/Build/Products/Release-iphoneos/KostenErfasser.app Payload/
+          zip -qry KostenErfasser.ipa Payload
+          ls -lh KostenErfasser.ipa
+      - name: IPA hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: KostenErfasser-${{ github.run_number }}
+          path: KostenErfasser.ipa
+          retention-days: 30

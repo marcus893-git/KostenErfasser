@@ -42,3 +42,10 @@ struct PaymentMethodTests {
         }
     }
 }
+
+struct ExpenseSourceTests {
+    /// Raw values are persisted. Changing one would break existing data.
+    @Test func rawValuesAreStable() {
+        #expect(ExpenseSource.allCases.map(\.rawValue) == ["manuell", "scan", "import", "wiederkehrend"])
+    }
+}

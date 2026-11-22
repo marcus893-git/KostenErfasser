@@ -79,6 +79,17 @@ public struct Period: Hashable, Sendable {
         return Period.containing(dayBefore, kind: kind, calendar: calendar)
     }
 
+    /// The period directly after this one, e.g. the next month.
+    /// For a custom range: the same number of days directly after it.
+    public func next(calendar: Calendar) -> Period {
+        guard let kind else {
+            let days = dayCount(calendar: calendar)
+            let newEnd = calendar.date(byAdding: .day, value: days, to: end)!
+            return Period(kind: nil, start: end, end: newEnd)
+        }
+        return Period.containing(end, kind: kind, calendar: calendar)
+    }
+
     /// The same period one year earlier, e.g. November 2025 for November 2026.
     public func sameRangeLastYear(calendar: Calendar) -> Period {
         let shiftedStart = calendar.date(byAdding: .year, value: -1, to: start)!

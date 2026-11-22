@@ -64,4 +64,18 @@ struct AmountParserTests {
         let match = try #require(AmountParser.amounts(in: line).first)
         #expect(line[match.range] == "1,50-")
     }
+
+    // MARK: Input formatting
+
+    @Test(arguments: [0, 5, 99, 100, 1_234, 123_456, -150] as [Int64])
+    func inputTextRoundTrips(cents: Int64) {
+        let text = AmountInputFormatter.text(for: Money(cents: cents))
+        #expect(AmountParser.parseCents(text) == cents)
+    }
+
+    @Test func inputTextFormat() {
+        #expect(AmountInputFormatter.text(for: Money(cents: 123_456)) == "1234,56")
+        #expect(AmountInputFormatter.text(for: Money(cents: 5)) == "0,05")
+        #expect(AmountInputFormatter.text(for: Money(cents: -150)) == "-1,50")
+    }
 }

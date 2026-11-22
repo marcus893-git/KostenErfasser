@@ -111,3 +111,24 @@ struct PeriodTests {
         #expect(previous.end == period.start)
     }
 }
+
+struct PeriodNavigationTests {
+    let calendar = Calendar.kostenErfasser(timeZone: TimeZone(identifier: "Europe/Berlin")!)
+
+    private func midnight(_ year: Int, _ month: Int, _ day: Int) -> Date {
+        calendar.date(from: DateComponents(year: year, month: month, day: day))!
+    }
+
+    @Test func nextPeriods() {
+        let december = Period.containing(midnight(2026, 12, 24), kind: .month, calendar: calendar)
+        let january = december.next(calendar: calendar)
+        #expect(january.start == midnight(2027, 1, 1))
+        #expect(january.end == midnight(2027, 2, 1))
+        #expect(january.previous(calendar: calendar) == december)
+
+        let custom = Period.custom(from: midnight(2026, 11, 10), through: midnight(2026, 11, 20), calendar: calendar)
+        let following = custom.next(calendar: calendar)
+        #expect(following.start == midnight(2026, 11, 21))
+        #expect(following.dayCount(calendar: calendar) == 11)
+    }
+}

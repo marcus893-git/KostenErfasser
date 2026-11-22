@@ -1,0 +1,52 @@
+# Projektbeschreibung für XcodeGen. Das Xcode-Projekt wird daraus erzeugt
+# (in der CI oder auf einem Mac mit `xcodegen generate --spec App/project.yml`)
+# und nicht eingecheckt.
+name: KostenErfasser
+options:
+  bundleIdPrefix: de.kostenerfasser
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""
+targets:
+  KostenErfasserCore:
+    type: library.static
+    platform: iOS
+    sources:
+      - path: ../Sources/KostenErfasserCore
+    settings:
+      base:
+        PRODUCT_NAME: KostenErfasserCore
+        SKIP_INSTALL: YES
+  KostenErfasser:
+    type: application
+    platform: iOS
+    sources:
+      - path: KostenErfasser
+    dependencies:
+      - target: KostenErfasserCore
+    info:
+      path: Generated/Info.plist
+      properties:
+        CFBundleDisplayName: KostenErfasser
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSRequiresIPhoneOS: true
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        NSCameraUsageDescription: Die Kamera wird zum Scannen von Kassenzetteln und Rechnungen verwendet.
+        ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: de.kostenerfasser.app
+        TARGETED_DEVICE_FAMILY: "1"
+        ENABLE_PREVIEWS: NO
+    scheme: {}
