@@ -16,3 +16,6 @@ App/Generated/
 build/
 Payload/
 *.ipa
+
+# Lokale Signatur (Team, Bundle-ID), von App/generate.sh geschrieben
+App/Signing.local.xcconfig

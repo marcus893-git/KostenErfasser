@@ -1,9 +1,9 @@
 # Projektbeschreibung für XcodeGen. Das Xcode-Projekt wird daraus erzeugt
-# (in der CI oder auf einem Mac mit `xcodegen generate --spec App/project.yml`)
-# und nicht eingecheckt.
+# (auf dem Mac mit App/generate.sh, in der CI im Workflow „iOS-App“)
+# und nicht eingecheckt. Team und Bundle-ID stehen in Signing.xcconfig
+# bzw. in der lokalen, nicht eingecheckten Signing.local.xcconfig.
 name: KostenErfasser
 options:
-  bundleIdPrefix: de.kostenerfasser
   deploymentTarget:
     iOS: "26.0"
   createIntermediateGroups: true
@@ -12,7 +12,6 @@ settings:
     SWIFT_VERSION: "6.0"
     MARKETING_VERSION: "0.1.0"
     CURRENT_PROJECT_VERSION: "1"
-    DEVELOPMENT_TEAM: ""
 targets:
   KostenErfasserCore:
     type: library.static
@@ -30,6 +29,9 @@ targets:
       - path: KostenErfasser
     dependencies:
       - target: KostenErfasserCore
+    configFiles:
+      Debug: Signing.xcconfig
+      Release: Signing.xcconfig
     info:
       path: Generated/Info.plist
       properties:
@@ -46,7 +48,6 @@ targets:
         ITSAppUsesNonExemptEncryption: false
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: de.kostenerfasser.app
         TARGETED_DEVICE_FAMILY: "1"
         ENABLE_PREVIEWS: NO
     scheme: {}

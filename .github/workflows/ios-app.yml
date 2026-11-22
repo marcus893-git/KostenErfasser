@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: App bauen (unsigniert, für SideStore)
+    name: App bauen (Kontrolle, unsigniert)
     runs-on: macos-26
     timeout-minutes: 30
     steps:
@@ -21,7 +21,7 @@ jobs:
       - name: XcodeGen installieren
         run: brew install xcodegen
       - name: Xcode-Projekt erzeugen
-        run: xcodegen generate --spec App/project.yml
+        run: NO_OPEN=1 App/generate.sh
       - name: App bauen
         run: |
           set -o pipefail
@@ -40,8 +40,16 @@ jobs:
         run: |
           mkdir -p Payload
           cp -R build/Build/Products/Release-iphoneos/KostenErfasser.app Payload/
+          BUNDLE_ID=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' Payload/KostenErfasser.app/Info.plist)
+          echo "Bundle-ID: $BUNDLE_ID, Version: $(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' Payload/KostenErfasser.app/Info.plist) ($(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' Payload/KostenErfasser.app/Info.plist))"
+          test "$BUNDLE_ID" = "de.kostenerfasser.app"
           zip -qry KostenErfasser.ipa Payload
           ls -lh KostenErfasser.ipa
+      - name: Signatur-Sicherung von generate.sh prüfen
+        run: |
+          printf '\t\tDEVELOPMENT_TEAM = AB12CD34EF;\n' >> App/KostenErfasser.xcodeproj/project.pbxproj
+          NO_OPEN=1 App/generate.sh
+          grep -q '^DEVELOPMENT_TEAM = AB12CD34EF$' App/Signing.local.xcconfig
       - name: IPA hochladen
         uses: actions/upload-artifact@v5
         with:

@@ -1,0 +1,10 @@
+// Signatur-Einstellungen der App.
+// Eigene Werte (Team, Bundle-ID) stehen in Signing.local.xcconfig. Diese Datei legt
+// App/generate.sh an, nachdem in Xcode unter „Signing & Capabilities“ ein Team gewählt wurde.
+// Sie wird nicht eingecheckt.
+
+CODE_SIGN_STYLE = Automatic
+DEVELOPMENT_TEAM =
+PRODUCT_BUNDLE_IDENTIFIER = de.kostenerfasser.app
+
+#include? "Signing.local.xcconfig"
