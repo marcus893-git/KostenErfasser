@@ -144,7 +144,7 @@ Ablauf eines Beleg-Scans:
 | 21.11.2026 | Installation mit kostenloser Apple-ID („Personal Team“), Neuinstallation alle 7 Tage, kein kostenpflichtiges Developer-Konto. Folge: kein iCloud-Sync, höchstens 3 eigene Apps auf dem iPhone. |
 | 21.11.2026 | Zielgerät ist ein iPhone 16 mit iOS 26. Die App setzt iOS 26 als Mindestversion voraus. |
 | 21.11.2026 | Die Standardkategorien aus der Tabelle oben werden so übernommen. |
-| 22.11.2026 | Kein Mac vorhanden: Installation über SideStore (Weg D in Teil 3). SideStore wird einmalig mit einem geliehenen Computer eingerichtet, danach erneuert das iPhone die App selbst. Die App baut GitHub Actions. |
+| 22.11.2026 | Installation mit Xcode auf dem dauerhaft verfügbaren MacBook (Weg A in Teil 3). SideStore (Weg D) bleibt als Ausweichweg beschrieben. GitHub Actions baut die App zusätzlich bei jeder Änderung als Kontrolle. |
 
 ## Offene Entscheidungen
 

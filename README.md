@@ -1,6 +1,6 @@
 # KostenErfasser
 
-Private Ausgabenerfassung fürs iPhone: Ausgaben manuell oder per Kamera erfassen (Endsumme, Firma und Datum werden vom Kassenzettel gelesen), nach Kategorien ordnen und nach Zeiträumen auswerten. Alle Daten bleiben auf dem iPhone. Installiert wird ohne App Store mit einer kostenlosen Apple-ID über SideStore; GitHub baut die App automatisch. Anleitung: [docs/INSTALLATION.md](docs/INSTALLATION.md).
+Private Ausgabenerfassung fürs iPhone: Ausgaben manuell oder per Kamera erfassen (Endsumme, Firma und Datum werden vom Kassenzettel gelesen), nach Kategorien ordnen und nach Zeiträumen auswerten. Alle Daten bleiben auf dem iPhone. Installiert wird ohne App Store mit Xcode auf dem MacBook und einer kostenlosen Apple-ID. Anleitung: [docs/INSTALLATION.md](docs/INSTALLATION.md).
 
 ## Stand
 
@@ -13,10 +13,11 @@ Stufe 1 (MVP) ist in Arbeit: manuelle Erfassung, Ausgabenliste mit Suche, Monats
 | `Package.swift`, `Sources/KostenErfasserCore/` | Fachlogik, nur Foundation, läuft auf iOS, macOS und Linux |
 | `Tests/KostenErfasserCoreTests/` | Unit-Tests mit Swift Testing |
 | `App/project.yml`, `App/KostenErfasser/` | iOS-App mit SwiftUI, SwiftData und Swift Charts; Projekt wird mit XcodeGen erzeugt |
+| `App/generate.sh`, `App/Signing.xcconfig` | Projekt auf dem Mac erzeugen und öffnen; Signatur-Einstellungen |
 | `docs/konzept/` | Gesamtkonzept, technisches Konzept, Cloud-Umgebung und Installation |
 | `.github/workflows/ci.yml` | Lint und Tests bei jedem Push (Linux) |
-| `.github/workflows/ios-app.yml` | baut die App auf macOS und stellt `KostenErfasser.ipa` bereit |
-| `docs/INSTALLATION.md` | Installation auf dem iPhone mit SideStore |
+| `.github/workflows/ios-app.yml` | baut die App auf macOS als Kontrolle und stellt `KostenErfasser.ipa` bereit |
+| `docs/INSTALLATION.md` | Installation auf dem iPhone mit Xcode (Ausweichweg ohne Mac: `docs/INSTALLATION-SIDESTORE.md`) |
 
 ## Befehle
 
@@ -27,7 +28,7 @@ swift format lint --strict --recursive Package.swift Sources Tests App # Formati
 swift format -i --recursive Package.swift Sources Tests App            # Formatierung korrigieren
 ```
 
-Benötigt wird Swift 6 (in Xcode enthalten, unter Linux über swift.org). Die App selbst baut die CI; auf einem Mac ginge es mit `brew install xcodegen && xcodegen generate --spec App/project.yml`.
+Benötigt wird Swift 6 (in Xcode enthalten, unter Linux über swift.org). Die App wird auf dem Mac mit `./App/generate.sh` als Xcode-Projekt erzeugt (braucht XcodeGen: `brew install xcodegen`) und in Xcode gebaut.
 
 ## Konzept
 

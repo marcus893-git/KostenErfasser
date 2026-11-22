@@ -13,10 +13,10 @@ Die App besteht aus zwei Teilen. Ein plattformunabhängiges Swift-Paket (KostenE
 | Kategorie-Vorschlag                                            | Swift-Paket | Händlerliste, gelernte Zuordnungen        | ja                   |
 | Statistik-Engine                                               | Swift-Paket | Aggregation, Vergleiche, Prognose         | ja                   |
 | CSV-Export und Backup-Format                                   | Swift-Paket | Codable, JSON                             | ja                   |
-| Speicherung                                                    | App         | SwiftData                                 | nein, Mac            |
-| Oberfläche und Diagramme                                       | App         | SwiftUI, Swift Charts                     | nein, Mac            |
-| Scanner und Texterkennung                                      | App         | VisionKit, Vision                         | nein, Mac und iPhone |
-| App-Sperre                                                     | App         | LocalAuthentication                       | nein, Mac            |
+| Speicherung                                                    | App         | SwiftData                                 | nein, MacBook oder CI            |
+| Oberfläche und Diagramme                                       | App         | SwiftUI, Swift Charts                     | nein, MacBook oder CI            |
+| Scanner und Texterkennung                                      | App         | VisionKit, Vision                         | nein, MacBook und iPhone |
+| App-Sperre                                                     | App         | LocalAuthentication                       | nein, MacBook oder CI            |
 
 ## Projektstruktur im Repository
 
@@ -37,7 +37,7 @@ Die App besteht aus zwei Teilen. Ein plattformunabhängiges Swift-Paket (KostenE
       docs/                          Konzept und Entscheidungen
       .github/workflows/ci.yml       Linux: swift test, macOS: xcodebuild
 
-Da kein Mac zur Verfügung steht, wird das Xcode-Projekt nicht eingecheckt, sondern in der CI mit XcodeGen aus `App/project.yml` erzeugt. Neue Dateien in `App/KostenErfasser/` gehören damit automatisch zur App. Die App bindet KostenErfasserCore als statische Bibliothek ein. Externe Swift-Abhängigkeiten gibt es keine; XcodeGen ist nur ein Build-Werkzeug in der CI.
+Das Xcode-Projekt wird nicht eingecheckt, sondern mit XcodeGen aus `App/project.yml` erzeugt: auf dem MacBook mit `App/generate.sh`, in der CI im Workflow „iOS-App“. Neue Dateien in `App/KostenErfasser/` gehören damit automatisch zur App. Team und Bundle-ID stehen in der lokalen Datei `App/Signing.local.xcconfig`, die `generate.sh` aus der Auswahl in Xcode anlegt und die nicht eingecheckt wird. Die App bindet KostenErfasserCore als statische Bibliothek ein. Externe Swift-Abhängigkeiten gibt es keine; XcodeGen ist nur ein Build-Werkzeug in der CI.
 
 ## Datenmodell
 
@@ -125,7 +125,7 @@ Zeiträume werden mit dem Kalender für das Gebietsschema de_DE gebildet, die Wo
 - Unit-Tests für das Swift-Paket mit Swift Testing, lauffähig unter Linux in der Cloud und auf dem Mac.
 - Formatierung und Lint mit swift-format, das in der Swift-Toolchain enthalten ist.
 - UI-Tests der wichtigsten Abläufe (manuell erfassen, Scan mit Testbild, Statistik) im iOS-Simulator auf dem Mac.
-- GitHub Actions: ein Linux-Job prüft bei jedem Push Formatierung und Tests. Ein macOS-Job baut bei Änderungen an App oder Kernpaket eine unsignierte IPA für SideStore. macOS-Minuten werden bei privaten Repositories zehnfach angerechnet, deshalb läuft er nur bei passenden Änderungen.
+- GitHub Actions: ein Linux-Job prüft bei jedem Push Formatierung und Tests. Ein macOS-Job baut bei Änderungen an App oder Kernpaket die App als Kontrolle (unsignierte IPA). macOS-Minuten werden bei privaten Repositories zehnfach angerechnet, deshalb läuft er nur bei passenden Änderungen.
 
 ## Technische Eckdaten
 

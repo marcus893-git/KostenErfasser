@@ -1,6 +1,6 @@
 # KostenErfasser
 
-Native iPhone-App (SwiftUI) zur privaten Ausgabenerfassung mit Belegscan per Kamera und Auswertungen. Alle Daten lokal auf dem Gerät, keine Server, keine Web-APIs. Installation ohne App Store mit kostenloser Apple-ID über SideStore (7-Tage-Signatur, kein iCloud/CloudKit möglich, siehe `docs/INSTALLATION.md`). Es gibt keinen Mac: Die App wird nur in GitHub Actions gebaut (Workflow „iOS-App“, unsignierte IPA). Zielgerät: iPhone 16 mit iOS 26, Mindestversion iOS 26 (neue APIs wie Vision RecognizeDocumentsRequest und Foundation Models ohne Verfügbarkeitsprüfung für ältere Systeme nutzbar; Foundation Models trotzdem auf Verfügbarkeit des Modells prüfen).
+Native iPhone-App (SwiftUI) zur privaten Ausgabenerfassung mit Belegscan per Kamera und Auswertungen. Alle Daten lokal auf dem Gerät, keine Server, keine Web-APIs. Installation ohne App Store mit kostenloser Apple-ID über Xcode auf dem MacBook des Nutzers (7-Tage-Signatur, kein iCloud/CloudKit möglich, siehe `docs/INSTALLATION.md`). In der Cloud-Session gibt es keinen Mac: Hier wird die App nur von GitHub Actions gebaut (Workflow „iOS-App“, unsignierte IPA als Kontrolle). Zielgerät: iPhone 16 mit iOS 26, Mindestversion iOS 26 (neue APIs wie Vision RecognizeDocumentsRequest und Foundation Models ohne Verfügbarkeitsprüfung für ältere Systeme nutzbar; Foundation Models trotzdem auf Verfügbarkeit des Modells prüfen).
 
 Konzept und getroffene Entscheidungen: `docs/konzept/` (Teil 1 Produkt, Teil 2 Technik, Teil 3 Umgebung und Installation). Ausbaustufen 0 bis 4 stehen in Teil 1.
 
@@ -11,7 +11,7 @@ Konzept und getroffene Entscheidungen: `docs/konzept/` (Teil 1 Produkt, Teil 2 T
   - `Receipt/`: Belegerkennung, derzeit `AmountParser`
   - `Categories/`: `DefaultCategories`
 - `Tests/KostenErfasserCoreTests/`: Swift Testing (`import Testing`, `@Test`, `#expect`).
-- `App/project.yml`: Projektbeschreibung für XcodeGen. Das Xcode-Projekt wird daraus in der CI erzeugt und nicht eingecheckt. Das Kernpaket ist dort als statische Bibliothek `KostenErfasserCore` eingebunden (`import KostenErfasserCore`).
+- `App/project.yml`: Projektbeschreibung für XcodeGen. Das Xcode-Projekt wird daraus erzeugt (Mac: `App/generate.sh`, CI: Workflow „iOS-App“) und nicht eingecheckt. Bundle-ID und Signatur kommen aus `App/Signing.xcconfig` und der lokalen, nicht eingecheckten `App/Signing.local.xcconfig`; keine Bundle-ID oder `bundleIdPrefix` in `project.yml` setzen, sonst greift die xcconfig nicht. Das Kernpaket ist dort als statische Bibliothek `KostenErfasserCore` eingebunden (`import KostenErfasserCore`).
 - `App/KostenErfasser/`: iOS-App mit SwiftUI, SwiftData und Swift Charts.
   - `Model/`: SwiftData-Modelle `Expense`, `ExpenseCategory` (nicht `Category`, Namenskonflikt mit der ObjC-Runtime), `CategorySeeder`
   - `Views/`: Tabs Übersicht, Ausgaben, Erfassen, Statistik, Einstellungen

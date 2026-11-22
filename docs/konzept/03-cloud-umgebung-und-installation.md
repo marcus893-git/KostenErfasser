@@ -64,7 +64,7 @@ if [ -f KostenErfasser/Package.swift ]; then (cd KostenErfasser && swift package
 
 ### Secrets und Variablen
 
-Es sind keine nötig. Die App arbeitet komplett lokal, ruft keine Web-APIs auf und braucht keine API-Schlüssel. Signaturzertifikate und Provisioning-Profile von Apple gehören nicht in die Cloud-Umgebung, denn signiert wird auf dem iPhone durch SideStore. Soll später GitHub Actions eine signierte App bauen, kommen Zertifikat und Profil als verschlüsselte Secrets in die Einstellungen des GitHub-Repositorys, nicht in diese Umgebung.
+Es sind keine nötig. Die App arbeitet komplett lokal, ruft keine Web-APIs auf und braucht keine API-Schlüssel. Signaturzertifikate und Provisioning-Profile von Apple gehören nicht in die Cloud-Umgebung, denn signiert wird in Xcode auf dem MacBook. Soll später GitHub Actions eine signierte App bauen, kommen Zertifikat und Profil als verschlüsselte Secrets in die Einstellungen des GitHub-Repositorys, nicht in diese Umgebung.
 
 ### Pflege
 
@@ -75,15 +75,15 @@ Es sind keine nötig. Die App arbeitet komplett lokal, ruft keine Web-APIs auf u
 ## Entwicklungsablauf
 
 1.  Claude arbeitet in einer Cloud-Session auf einem eigenen Branch: Fachlogik mit Tests, SwiftUI-Code und Dokumentation. Vor jedem Push muss swift test erfolgreich sein.
-2.  Nach dem Push prüft GitHub Actions Formatierung und Tests unter Linux und baut auf macOS die App als IPA.
-3.  Die neue IPA aus GitHub Actions über SideStore auf dem iPhone installieren und ausprobieren (siehe `docs/INSTALLATION.md`).
+2.  Nach dem Push prüft GitHub Actions Formatierung und Tests unter Linux und baut auf macOS die App als Kontrolle.
+3.  Auf dem MacBook den neuen Stand holen (`git pull`), `./App/generate.sh` ausführen und die App mit Xcode auf das iPhone spielen (siehe `docs/INSTALLATION.md`).
 4.  Rückmeldungen aus dem Test gehen als neue Aufgabe an eine Cloud-Session.
 
 ## Installation auf dem iPhone ohne App Store
 
 ### Weg A: Mac mit Xcode und kostenloser Apple-ID
 
-Wird nicht genutzt, da kein Mac vorhanden ist.
+Gewählt am 22.11.2026, da ein MacBook dauerhaft verfügbar ist. Die ausführliche Anleitung mit `App/generate.sh` steht in `docs/INSTALLATION.md`.
 
 1.  Xcode aus dem Mac App Store installieren und öffnen. Unter Xcode, Settings, Accounts die eigene Apple-ID hinzufügen.
 2.  Projekt öffnen, beim Target KostenErfasser unter „Signing & Capabilities“ das „Personal Team“ wählen und eine eindeutige Bundle-ID setzen, z. B. de.deinname.kostenerfasser.
@@ -105,6 +105,6 @@ Ablauf wie bei Weg A, aber mit dem bezahlten Team. Eine Installation gilt dann e
 
 Weg C ist umständlicher und hängt von Werkzeugen anderer Anbieter ab. Er ist als Ausweichweg gedacht, falls kein Mac verfügbar ist.
 
-### Weg D: SideStore ohne Mac (gewählt am 22.11.2026)
+### Weg D: SideStore ohne Mac (Ausweichweg)
 
-GitHub Actions baut die App auf einem macOS-Runner als unsignierte IPA. SideStore signiert und installiert sie auf dem iPhone mit der kostenlosen Apple-ID. Ein Computer (Windows, macOS oder Linux) wird nur einmal gebraucht, um SideStore mit iloader zu installieren, und danach erst wieder, falls nach einem iOS-Update die Kopplungsdatei ungültig wird. Das Erneuern alle 7 Tage erledigt SideStore auf dem iPhone, solange WLAN und die App LocalDevVPN verbunden sind. Die Schritt-für-Schritt-Anleitung steht in `docs/INSTALLATION.md`.
+GitHub Actions baut die App auf einem macOS-Runner als unsignierte IPA. SideStore signiert und installiert sie auf dem iPhone mit der kostenlosen Apple-ID. Ein Computer (Windows, macOS oder Linux) wird nur einmal gebraucht, um SideStore mit iloader zu installieren, und danach erst wieder, falls nach einem iOS-Update die Kopplungsdatei ungültig wird. Das Erneuern alle 7 Tage erledigt SideStore auf dem iPhone, solange WLAN und die App LocalDevVPN verbunden sind. Die Schritt-für-Schritt-Anleitung steht in `docs/INSTALLATION-SIDESTORE.md`.
