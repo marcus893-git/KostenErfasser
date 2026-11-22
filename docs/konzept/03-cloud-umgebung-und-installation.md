@@ -104,3 +104,7 @@ Ablauf wie bei Weg A, aber mit dem bezahlten Team. Eine Installation gilt dann e
 3.  Entwicklermodus und Vertrauen auf dem iPhone wie bei Weg A. Auch hier gilt die 7-Tage-Frist. AltStore kann die Verlängerung im WLAN automatisch erledigen, solange der PC läuft.
 
 Weg C ist umständlicher und hängt von Werkzeugen anderer Anbieter ab. Er ist als Ausweichweg gedacht, falls kein Mac verfügbar ist.
+
+### Weg D: SideStore ohne Mac (gewählt am 22.11.2026)
+
+GitHub Actions baut die App auf einem macOS-Runner als unsignierte IPA. SideStore signiert und installiert sie auf dem iPhone mit der kostenlosen Apple-ID. Ein Computer (Windows, macOS oder Linux) wird nur einmal gebraucht, um SideStore mit iloader zu installieren, und danach erst wieder, falls nach einem iOS-Update die Kopplungsdatei ungültig wird. Das Erneuern alle 7 Tage erledigt SideStore auf dem iPhone, solange WLAN und die App LocalDevVPN verbunden sind. Die Schritt-für-Schritt-Anleitung steht in `docs/INSTALLATION.md`.

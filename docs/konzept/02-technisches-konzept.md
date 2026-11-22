@@ -31,13 +31,13 @@ Die App besteht aus zwei Teilen. Ein plattformunabhängiges Swift-Paket (KostenE
       Tests/KostenErfasserCoreTests/
         Fixtures/                    anonymisierte OCR-Texte echter Belege
       App/
-        KostenErfasser.xcodeproj     Xcode-Projekt mit synchronisierten Ordnern
+        project.yml                  Projektbeschreibung für XcodeGen
         KostenErfasser/              SwiftUI-Views, SwiftData-Modelle, Scanner
         KostenErfasserUITests/       UI-Tests
       docs/                          Konzept und Entscheidungen
       .github/workflows/ci.yml       Linux: swift test, macOS: xcodebuild
 
-Das Xcode-Projekt nutzt synchronisierte Ordner (ab Xcode 16): Neue Dateien in einem Ordner gehören automatisch zum Target. So kann Code in der Cloud-Umgebung angelegt werden, ohne die Projektdatei zu bearbeiten. Die App bindet KostenErfasserCore als lokales Paket ein. Externe Abhängigkeiten gibt es keine.
+Da kein Mac zur Verfügung steht, wird das Xcode-Projekt nicht eingecheckt, sondern in der CI mit XcodeGen aus `App/project.yml` erzeugt. Neue Dateien in `App/KostenErfasser/` gehören damit automatisch zur App. Die App bindet KostenErfasserCore als statische Bibliothek ein. Externe Swift-Abhängigkeiten gibt es keine; XcodeGen ist nur ein Build-Werkzeug in der CI.
 
 ## Datenmodell
 
@@ -125,7 +125,7 @@ Zeiträume werden mit dem Kalender für das Gebietsschema de_DE gebildet, die Wo
 - Unit-Tests für das Swift-Paket mit Swift Testing, lauffähig unter Linux in der Cloud und auf dem Mac.
 - Formatierung und Lint mit swift-format, das in der Swift-Toolchain enthalten ist.
 - UI-Tests der wichtigsten Abläufe (manuell erfassen, Scan mit Testbild, Statistik) im iOS-Simulator auf dem Mac.
-- GitHub Actions: ein Linux-Job führt bei jedem Push swift test aus. Ein macOS-Job baut die App nur bei Pull Requests, weil macOS-Minuten bei privaten Repositories zehnfach angerechnet werden.
+- GitHub Actions: ein Linux-Job prüft bei jedem Push Formatierung und Tests. Ein macOS-Job baut bei Änderungen an App oder Kernpaket eine unsignierte IPA für SideStore. macOS-Minuten werden bei privaten Repositories zehnfach angerechnet, deshalb läuft er nur bei passenden Änderungen.
 
 ## Technische Eckdaten
 

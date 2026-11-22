@@ -144,8 +144,8 @@ Ablauf eines Beleg-Scans:
 | 21.11.2026 | Installation mit kostenloser Apple-ID („Personal Team“), Neuinstallation alle 7 Tage, kein kostenpflichtiges Developer-Konto. Folge: kein iCloud-Sync, höchstens 3 eigene Apps auf dem iPhone. |
 | 21.11.2026 | Zielgerät ist ein iPhone 16 mit iOS 26. Die App setzt iOS 26 als Mindestversion voraus. |
 | 21.11.2026 | Die Standardkategorien aus der Tabelle oben werden so übernommen. |
+| 22.11.2026 | Kein Mac vorhanden: Installation über SideStore (Weg D in Teil 3). SideStore wird einmalig mit einem geliehenen Computer eingerichtet, danach erneuert das iPhone die App selbst. Die App baut GitHub Actions. |
 
 ## Offene Entscheidungen
 
-1.  Steht ein Mac zur Verfügung? Davon hängt der Installationsweg ab (Weg A mit Mac oder Weg C ohne Mac, siehe Teil 3).
-2.  Sollen Belegbilder dauerhaft gespeichert werden? Ein Kassenzettel belegt komprimiert etwa 150 bis 300 KB.
+1.  Sollen Belegbilder dauerhaft gespeichert werden? Ein Kassenzettel belegt komprimiert etwa 150 bis 300 KB.
